@@ -19,7 +19,7 @@ function updateDOM() {
     card.classList.add("card");
     // Link
     const link = document.createElement("a");
-    link.href = result.hdURL;
+    link.href = result.hdurl;
     link.title = "View Full Image";
     link.target = "_blank";
     // Image
@@ -49,15 +49,16 @@ function updateDOM() {
     const date = document.createElement("strong");
     date.textContent = result.date;
     // Copyright
+    const copyrightResult =
+      result.copyright === undefined ? "" : result.copyright;
     const copyright = document.createElement("span");
-    copyright.textContent = ` ${result.copyright}`;
+    copyright.textContent = ` ${copyrightResult}`;
     // Append
     footer.append(date, copyright);
     cardBody.append(cardTitle, saveText, cardText, footer);
     link.appendChild(image);
     card.append(link, cardBody);
-    // console.log(card);
-    imagesContainer.appendChild(card);
+    imageContainer.appendChild(card);
   });
 }
 
@@ -66,7 +67,6 @@ async function getNasaPictures() {
   try {
     const res = await fetch(apiURL);
     resultsArray = await res.json();
-    console.log(resultsArray);
     updateDOM();
   } catch (error) {
     // Catch Error Here
